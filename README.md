@@ -1,14 +1,4 @@
-You’re mixing terms, but I’ll interpret you correctly:
 
-You want a **proper, clean, fully structured README.md for Week 6 (ready for submission)** — no fragments, no confusion, fully polished.
-
-Here is the **final submission-grade version**:
-
----
-
-# 📄 `README.md` (FINAL CLEAN VERSION)
-
-```md id="wk6rmd"
 # Week 6: Asynchronous JavaScript (Season 10)
 
 ## 📌 Overview
@@ -72,10 +62,11 @@ iyf-s10-week-06-Solfegesam/
 ├── app.js
 └── README.md
 
-```id="wk6struct"
 
 ```
 
+```id="wk6struct"
+```
 ---
 
 ## 🌦️ Weather Dashboard Project
@@ -107,7 +98,7 @@ OpenWeatherMap API:
 [https://api.openweathermap.org/data/2.5/weather](https://api.openweathermap.org/data/2.5/weather)
 
 ````id="apiwk6"
-
+```
 ---
 
 ### 🧠 Key Concepts Applied
