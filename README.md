@@ -40,14 +40,14 @@ iyf-s10-week-06-Solfegesam/
 │   ├── post-request.js
 │   │
 │   ├── dom-display/
-│   │   ├── index.html
-│   │   ├── styles.css
-│   │   └── app.js
+│   │   ├── dom-display.html
+│   │   ├── dom-display.css
+│   │   └── dom-display.js
 │   │
 │   └── search-filter/
-│       ├── index.html
-│       ├── styles.css
-│       └── app.js
+│       ├── search-filter.html
+│       ├── search-filter.css
+│       └── search-filter.js
 │
 ├── challenges/
 │   ├── day1-delay.js
@@ -57,11 +57,10 @@ iyf-s10-week-06-Solfegesam/
 │   └── day5-parallel-fetch.js
 │
 └── weather-dashboard/
-├── index.html
-├── styles.css
-├── app.js
-└── README.md
-
+    ├── weather-dashboard.html
+    ├── weather-dashboard.css
+    ├── weather-dashboard.js
+    └── README.md
 
 ```
 
