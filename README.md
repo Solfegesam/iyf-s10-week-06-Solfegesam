@@ -79,14 +79,27 @@ A responsive weather application built using JavaScript and the OpenWeatherMap A
 - Search weather by city name
 - Displays:
   - Temperature (°C)
-  - Weather condition and icon
+  - Weather description
+  - Weather icon
   - Feels-like temperature
   - Humidity
   - Wind speed
   - Atmospheric pressure
-- Loading indicator during API requests
-- Error handling for invalid or failed requests
-- Recent search history (optional enhancement using localStorage)
+- Loading indicator while fetching data
+- Error handling for:
+  - Invalid city names
+  - Network issues
+- Responsive UI updates
+
+---
+
+## 🧠 Technologies Used
+
+- HTML
+- CSS
+- JavaScript (ES6+)
+- Fetch API
+- Async/Await
 
 ---
 
