@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="weather-dashboard.css">
+</head>
+<body>
+
+<div class="app">
+    <h1>🌦️ Weather Dashboard</h1>
+
+    <form id="search-form">
+        <input type="text" id="city-input" placeholder="Enter city name..." required>
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="loading" class="hidden">Loading...</div>
+    <div id="error" class="hidden error"></div>
+
+    <div id="weather-display" class="hidden">
+        <h2 id="city-name"></h2>
+        <img id="weather-icon" alt="Weather icon">
+        <p id="temperature"></p>
+        <p id="description"></p>
+
+        <div class="details">
+            <p>Feels Like: <span id="feels-like"></span></p>
+            <p>Humidity: <span id="humidity"></span></p>
+            <p>Wind: <span id="wind"></span></p>
+            <p>Pressure: <span id="pressure"></span></p>
+        </div>
+    </div>
+
+    <div class="history">
+        <h3>Recent Searches</h3>
+        <ul id="history-list"></ul>
+    </div>
+</div>
+
+<script src="weather-dashboard.js"></script>
+</body>
+</html>
