@@ -1,9 +1,13 @@
-const API_KEY = "YOUR_API_KEY"; // 🔴 PUT YOUR KEY HERE
+const API_KEY = "851e24f506b43fd88e46b47707241412";
 const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 
-// DOM elements
+let currentUnit = "metric";
+let lastCity = "";
+
+// DOM
 const form = document.getElementById("search-form");
 const input = document.getElementById("city-input");
+const toggleBtn = document.getElementById("unit-toggle");
 
 const loading = document.getElementById("loading");
 const errorDiv = document.getElementById("error");
@@ -23,16 +27,21 @@ const historyList = document.getElementById("history-list");
 
 // ================= API =================
 async function fetchWeather(city) {
-    const url = `${BASE_URL}?q=${city}&appid=${API_KEY}&units=metric`;
+    const url = `${BASE_URL}?q=${city}&appid=${API_KEY}&units=${currentUnit}`;
 
-    const response = await fetch(url);
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
 
-    if (!response.ok) {
-        if (response.status === 404) throw new Error("City not found");
-        throw new Error("Failed to fetch weather");
+        if (!response.ok) {
+            throw new Error(data.message || "Failed to fetch weather");
+        }
+
+        return data;
+
+    } catch (error) {
+        throw new Error("Network error. Check connection.");
     }
-
-    return response.json();
 }
 
 // ================= CONTROLLER =================
@@ -42,7 +51,10 @@ async function handleSearch(city) {
         hideError();
 
         const data = await fetchWeather(city);
+        lastCity = city;
+
         updateUI(data);
+        updateBackground(data.weather[0].main);
         saveHistory(city);
 
     } catch (err) {
@@ -54,18 +66,31 @@ async function handleSearch(city) {
 
 // ================= UI =================
 function updateUI(data) {
+    const unit = currentUnit === "metric" ? "°C" : "°F";
+    const windUnit = currentUnit === "metric" ? "m/s" : "mph";
+
     cityName.textContent = `${data.name}, ${data.sys.country}`;
-    temp.textContent = `${data.main.temp}°C`;
+    temp.textContent = `${data.main.temp}${unit}`;
     desc.textContent = data.weather[0].description;
 
     icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
 
-    feelsLike.textContent = `${data.main.feels_like}°C`;
+    feelsLike.textContent = `${data.main.feels_like}${unit}`;
     humidity.textContent = `${data.main.humidity}%`;
-    wind.textContent = `${data.wind.speed} m/s`;
+    wind.textContent = `${data.wind.speed} ${windUnit}`;
     pressure.textContent = `${data.main.pressure} hPa`;
 
     weatherDisplay.classList.remove("hidden");
+}
+
+// ================= BACKGROUND =================
+function updateBackground(condition) {
+    const c = condition.toLowerCase();
+
+    if (c.includes("clear")) document.body.style.background = "#fbbf24";
+    else if (c.includes("cloud")) document.body.style.background = "#94a3b8";
+    else if (c.includes("rain")) document.body.style.background = "#334155";
+    else document.body.style.background = "#0f172a";
 }
 
 // ================= STATES =================
@@ -78,8 +103,8 @@ function hideLoading() {
     loading.classList.add("hidden");
 }
 
-function showError(message) {
-    errorDiv.textContent = message;
+function showError(msg) {
+    errorDiv.textContent = msg;
     errorDiv.classList.remove("hidden");
 }
 
@@ -104,20 +129,33 @@ function saveHistory(city) {
 function renderHistory() {
     const history = JSON.parse(localStorage.getItem("history")) || [];
 
-    historyList.innerHTML = history.map(city => 
+    historyList.innerHTML = history.map(city =>
         `<li onclick="handleSearch('${city}')">${city}</li>`
     ).join("");
 }
+
+// ================= TOGGLE =================
+toggleBtn.addEventListener("click", () => {
+    currentUnit = currentUnit === "metric" ? "imperial" : "metric";
+
+    toggleBtn.textContent =
+        currentUnit === "metric" ? "Switch to °F" : "Switch to °C";
+
+    if (lastCity) handleSearch(lastCity);
+});
 
 // ================= EVENTS =================
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const city = input.value.trim();
-    if (!city) return;
+    if (!city) {
+        showError("Please enter a city");
+        return;
+    }
 
     handleSearch(city);
 });
 
-// Initialize
+// INIT
 renderHistory();
